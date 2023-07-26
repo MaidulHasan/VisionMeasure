@@ -20,7 +20,7 @@ def find_ref_object_corners(preprocessed_img):
     """
     The input should be a processed binary 8 bit image.
     Returns the 4 corner points of the A4 paper.
-    In counter-clockwise direction starting from top right corner, 
+    In counter-clockwise direction starting from top right corner,
     i.e, top right, top left, bottom left and bottom right
     """
 
@@ -29,13 +29,10 @@ def find_ref_object_corners(preprocessed_img):
     )
     # find the contour with the largest perimeter
     ref_obj_cnt = sorted(cnts, key=contour_perimeter, reverse=True)[:1][0]
-    # find the corners (output will be of shape (4, 1, 2). keep that.)
+    # find the corners
+    # output will be of shape (4, 1, 2).
+    # keep it like that if you are to draw bounding box with cv.polylines
     corners = cv.approxPolyDP(
         ref_obj_cnt, 0.01 * contour_perimeter(ref_obj_cnt), closed=True
     )
-    return corners
-
-
-# -----------------------------------------------------------------------------------------------
-###                                      Perspective Transform                              ###
-# -----------------------------------------------------------------------------------------------
+    return np.squeeze(corners)
