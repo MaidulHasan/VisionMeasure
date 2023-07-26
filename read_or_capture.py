@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 
 def read_image(img_path):
     try:
-        img = cv.resize(cv.imread(img_path), (1280, 720))
-        return cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+        img = cv.imread(img_path)
+        return img
     except:
         print("Invalid Image Path")
 
@@ -137,9 +137,4 @@ def read_or_capture(prompt_usr=True, img_path=None, device_id=None):
         if img is None:
             print("Please capture another image or provide a valid image path. \n")
 
-        else:
-            # plt.imshow(cv.cvtColor(img, cv.COLOR_BGR2RGB))
-            # plt.title("Captured Image")
-            # plt.show()
-            img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
         return img
