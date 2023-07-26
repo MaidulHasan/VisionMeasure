@@ -66,7 +66,12 @@ def take_picture(device_id=0):
 # -----------------------------------------------------------------------------------------------
 
 
-def take_user_input():
+def usr_prompt():
+    """
+    Prompt the user to provide a valid image path or a valid device id to capture one.
+
+    Returns: User input
+    """
     try:
         img_path_or_capture = int(
             input(
@@ -83,8 +88,7 @@ def take_user_input():
 
     if img_path_or_capture == 1:
         img_path = input("Please provide a valid image path : \t")
-        img = read_image(img_path)
-        return img
+        return img_path
 
     if img_path_or_capture == 2:
         video_capture_device_id = input(
@@ -96,11 +100,39 @@ def take_user_input():
 
         try:
             video_capture_device_id = int(video_capture_device_id)
+            return video_capture_device_id
 
         except:
             raise
 
-        img = take_picture(video_capture_device_id)
+
+# -----------------------------------------------------------------------------------------------
+###                                     Read or Capture Image                               ###
+# -----------------------------------------------------------------------------------------------
+
+
+def read_or_capture(prompt_usr=True, img_path=None, device_id=None):
+    if prompt_usr:
+        usr_input = usr_prompt()
+
+        if type(usr_input) == str:
+            img = read_image(usr_input)
+            return img
+
+        if type(usr_input) == int:
+            img = take_picture(usr_input)
+
+            if img is None:
+                print("Please capture another image or provide a valid image path. \n")
+
+            return img
+
+    if not prompt_usr and img_path:
+        img = read_image(img_path)
+        return img
+
+    if not prompt_usr and device_id is not None:
+        img = take_picture(device_id)
 
         if img is None:
             print("Please capture another image or provide a valid image path. \n")
