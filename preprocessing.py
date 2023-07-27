@@ -5,12 +5,17 @@
 import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
+from imutils import rotate_bound
 
 
 # -----------------------------------------------------------------------------------------------
 ###                                         Image Preprocessing                             ###
 # -----------------------------------------------------------------------------------------------
 def preprocess(img):
+    # rotate the image by 90 degree CCW if image width > image height
+    if img.shape[0] < img.shape[1]:
+        img = rotate_bound(img, -90)
+
     grayscale_img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     grayscale_img_blurred = cv.GaussianBlur(grayscale_img, (5, 5), 0, 0)
 
