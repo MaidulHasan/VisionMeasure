@@ -47,4 +47,11 @@ def find_corners(preprocessed_img):
         return None
     else:
         reordered_corner_points = reorder(corners)
-        return reordered_corner_points
+        if (
+            reordered_corner_points.flatten()[::2].any()
+            or reordered_corner_points.flatten()[1::2].any()
+        ):
+            print("Please try to fit the whole A4 paper inside the frame.")
+            return None
+        else:
+            return reordered_corner_points
