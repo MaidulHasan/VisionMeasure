@@ -6,6 +6,8 @@ import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
 
+from reorder_corner_points import reorder
+
 
 # -----------------------------------------------------------------------------------------------
 ###              Find Contours and Filter out the Reference Object (A4 Paper)               ###
@@ -19,9 +21,8 @@ def contour_perimeter(cnt):
 def find_corners(preprocessed_img):
     """
     The input should be a processed binary 8 bit image.
-    Returns the 4 corner points of the A4 paper in np.float32 data format.
-    In counter-clockwise direction starting from top right corner,
-    i.e, top right, top left, bottom left and bottom right
+    Returns the 4 corner points of the A4 paper in (top_left, top_right, bottom_left, bottom_right)
+    order as an array of shape (4, 2) and dtype=np.float32
     """
 
     cnts, _ = cv.findContours(
@@ -45,4 +46,5 @@ def find_corners(preprocessed_img):
         )
         return None
     else:
-        return np.squeeze(corners).astype(np.float32)
+        reordered_corner_points = reorder(corners)
+        return reordered_corner_points
