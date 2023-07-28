@@ -5,6 +5,7 @@
 import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
+from imutils import rotate_bound
 
 
 # -----------------------------------------------------------------------------------------------
@@ -27,7 +28,7 @@ def take_picture(device_id=0):
     cap = cv.VideoCapture(device_id)
 
     cap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
-    cap.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
+    cap.set(cv.CAP_PROP_FRAME_WIDTH, 700)
 
     try:
         if cap.isOpened() is False:
@@ -117,24 +118,26 @@ def read_or_capture(prompt_usr=True, img_path=None, device_id=None):
 
         if type(usr_input) == str:
             img = read_image(usr_input)
-            return img
 
         if type(usr_input) == int:
             img = take_picture(usr_input)
 
             if img is None:
                 print("Please capture another image or provide a valid image path. \n")
-
-            return img
+                return None
 
     if not prompt_usr and img_path:
         img = read_image(img_path)
-        return img
 
     if not prompt_usr and device_id is not None:
         img = take_picture(device_id)
 
         if img is None:
             print("Please capture another image or provide a valid image path. \n")
+            return None
 
-        return img
+    # rotate the image by 90 degree CCW if image width > image height
+    if img.shape[0] < img.shape[1]:
+        img = rotate_bound(img, -90)
+
+    return img
