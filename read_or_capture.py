@@ -7,6 +7,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 from imutils import rotate_bound
 
+# -----------------------------------------------------------------------------------------------
+###                                         Greetings                                      ###
+# -----------------------------------------------------------------------------------------------
+
+
+def greetings():
+    print(
+        """Greetings!!! Before you proceed to use this application please note the following -- 
+    1. Since the A4 paper is white, placing white objects on the paper will 
+    most likely produce faulty outcome.
+    2. Place only one object on the A4 paper at a time. To reduce false detection, only the highest 
+    perimeter object is filtered from all the possible detections.
+    3. This application only uses OpenCV and no deep learning model. So, due 
+    to constraints of classical computer vision the results may not be 
+    100% accurate. Long story short, Use at your own risk.
+
+To improve the chance of correct recognition and measurement you can do the following --
+    1. Capture the image in a clean background.
+    2. Try to fit the whole A4 paper inside the frame.
+    3. Lighting condition should not be too dark or too bright."""
+    )
+
 
 # -----------------------------------------------------------------------------------------------
 ###                                         Read Image                                      ###
@@ -113,6 +135,8 @@ def usr_prompt():
 
 
 def read_or_capture(prompt_usr=True, img_path=None, device_id=None):
+    greetings()
+
     if prompt_usr:
         usr_input = usr_prompt()
 
