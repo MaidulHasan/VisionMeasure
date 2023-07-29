@@ -24,14 +24,14 @@ def visualize_detections(src, pts):
     src = src.copy()
     box2d_obj, (w, h) = calculate_dimensions(pts)
     corner_points = cv.boxPoints(box2d_obj).astype(np.int32)
-    cv.polylines(src, [corner_points], isClosed=True, color=(0, 255, 0), thickness=2)
+    cv.polylines(src, [corner_points], isClosed=True, color=(0, 0, 255), thickness=1)
     cv.putText(
         src,
         f"Width: {round(w/10, 1)} cm",
         (10, 25),
         cv.FONT_HERSHEY_SCRIPT_SIMPLEX,
         0.5,
-        (255, 0, 255),
+        (0, 0, 0),
         1,
     )
     cv.putText(
@@ -40,7 +40,7 @@ def visualize_detections(src, pts):
         (10, 50),
         cv.FONT_HERSHEY_SCRIPT_SIMPLEX,
         0.5,
-        (255, 0, 255),
+        (0, 0, 0),
         1,
     )
 
