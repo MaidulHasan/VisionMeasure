@@ -1,35 +1,54 @@
------------------------------------
+--------------------------------------------------
 # VisionMeasure: Object Dimesion Measurement with OpenCV
-----------------------------------
+----------------------------------------------
 
+----------------------------------------
 ## Project Goal
 
-The goal is to develop a system using OpenCV that can be used to reliable measure the dimension of various types of objects in real time. For now, the object to measure should be placed in an A4 paper whose dimensions are known (210 x 297 mm). Later we intend to add functionality to upload a reference object of the users choosing. The output will be provided in real time.
+The goal is to develop a system using OpenCV that can be used to reliably measure the dimension of various types of objects in real time using the presence of a known object (object whose dimension is known) in the frame. 
 
-## Project Outline
+-----------------------------------------------
 
-1. **Image Preprocessing**: 
-    - Set video capture properties such as height and width to ensure each capture is consistent 
-    - image blurring, denoising, adaptive thresholding to improve edge detection and contour extraction.
+## Current Status, Usage and Project Description
 
-2. **Contour Filtering and Dimension Measurement**: 
-    - Filter out the reference object in the image (whose dimension is known) 
-    - Extract and Perspective transform the reference object.
-    - Calculate dimension per pixel (known_height/height_in_pixel)
-    - Filter relevant contours based on criteria like area, aspect ratio, or circularity
-    - Fit a rotated rectangle (for circular objects you can fit circle too)
-    - Find out the dimension of the object by multiplying the pixel information with the dimension per pixel measure found earlier
-    - The calculation steps can be rpeated say for the frames in a 2s video capture and the result can be averaged for greater accuracy and resiliance to camera stability issues.
+The object to measure should be placed in an A4 paper whose dimensions are known (210 x 297 mm). 
 
-3. **Dimension Verification (Optional)**: 
-    - A validation step can be introduced to ensure the accuracy of the measured dimensions. This could involve comparing the measured dimensions to ground-truth values or using multiple reference objects for calibration.
+### Caution !!!
+Before you proceed to use this application please note the following -- 
+    1. Since the A4 paper is white, placing white objects on the paper will 
+    most likely produce faulty outcome.
+    2. Place only one object on the A4 paper at a time. To reduce false detection, only the highest 
+    perimeter object is filtered from all the possible detections.
+    3. This application only uses OpenCV and no deep learning model. So, due 
+    to constraints of classical computer vision the results may not be 
+    100% accurate. Long story short, Use at your own risk.
 
-4. **Visualization and Output**: 
-    - After measuring the dimensions for each frame in the video or the single image, generate a visual output i.e, drawing bounding boxes around the detected objects and displaying their measured dimensions.
+To improve the chance of correct recognition and measurement you can do the following --
+    1. Capture the image in a clean background.
+    2. Try to fit the whole A4 paper inside the frame.
+    3. Lighting condition should not be too dark or too bright.
 
-5. **User Interface (Optional)**: 
-    - a simple graphical user interface (GUI) to input images or videos, display the results, and provide options for customization.
+### Usage
+Current implementation has a python script named "`pipeline_for_still_images.py`" which is a pipeline for detecting objects of interest from a still image and find the objects dimensions (width, height) in cm.
 
-## Project Status
+*Object of interest - Largest perimeter object placed on top of the A4 paper.
 
-Currently at step 1 (developing the image capturing and preprocessing pipeline).
+**Args**:
+    prompt_user: whether to prompt the user for image path or, device id. (default: False)
+    image_path: to use a stock/pre-captured image instead of prompting the user. (default: "./sample_imgs/paint_brush.jpeg")
+    capturing_device_id: to capture a live image instead of prompting or loading a stock one. (default: None)
+    visualize: whether to show the output image containing the info of detections. (default: True)
+    scale: matplotlib_imshow() function visualization scale. (default: 8)
+
+**Returns**: The output image (A rotated bounding box is drawn around the object of interest. The calculated dimensions (width, height) are also shown on the output image.)
+
+-------------------------------------------------
+
+## Future Prospect
+
+1. **Real time detection**: measurement from live capture (currently I don't have any USB Webcam so couldn't implement right now).
+2. **Dimension Verification**: a validation step can be introduced to ensure the accuracy of the measured dimensions. This could involve comparing the measured dimensions to ground-truth values or using multiple reference objects for calibration.
+3. **Use a reference object of the users choosing**. 
+4. **User Interface (Optional)**: a simple graphical user interface (GUI) to input images or videos, display the results, and provide some options for customization.
+
+-----------------------------------------------------
