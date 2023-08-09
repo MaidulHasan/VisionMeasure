@@ -35,7 +35,7 @@ The current implementation has a Python script named `pipeline_for_still_images.
 
 Run this script for detecting objects of interest from a still image and finding the objects' dimensions (width, height) in cm.
 
-    **Object of interest - Largest perimeter object placed on top of the A4 paper.**
+    Object of interest - Largest perimeter object placed on top of the A4 paper.
 
 **Args**:
     
@@ -54,13 +54,13 @@ Run this script for detecting objects of interest from a still image and finding
 #### Demo of using the application
 
 - Image used
-<img src="./sample_imgs/tennis_ball.jpeg">
+<img src="./sample_imgs/tennis_ball.jpeg" height=600 width=400>
 
 - Running the script
 <img src="./launch_vision_measure_demo.png">
 
 - Result
-<img src="./detections/tennis_ball_dimensions.png">
+<img src="./detections/tennis_ball_dimensions.png" height=600 width=700>
 
 -------------------------------------------------
 
