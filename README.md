@@ -31,9 +31,11 @@ To improve the chance of correct recognition and measurement you can do the foll
 
 ### Usage
 
-The current implementation has a Python script named "`pipeline_for_still_images.py`" which is a pipeline for detecting objects of interest from a still image and finding the objects' dimensions (width, height) in cm.
+The current implementation has a Python script named `pipeline_for_still_images.py`. 
 
-    Object of interest - Largest perimeter object placed on top of the A4 paper.
+Run this script for detecting objects of interest from a still image and finding the objects' dimensions (width, height) in cm.
+
+    **Object of interest - Largest perimeter object placed on top of the A4 paper.**
 
 **Args**:
     
@@ -48,6 +50,17 @@ The current implementation has a Python script named "`pipeline_for_still_images
     scale: matplotlib_imshow() function visualization scale. (default: 8)
 
 **Returns**: The output image (a rotated bounding box is drawn around the object of interest. The calculated dimensions (width, height) are also shown on the output image).
+
+#### Demo of using the application
+
+- Image used
+<img src="./sample_imgs/tennis_ball.jpeg">
+
+- Running the script
+<img src="./launch_vision_measure_demo.png">
+
+- Result
+<img src="./detections/tennis_ball_dimensions.png">
 
 -------------------------------------------------
 
